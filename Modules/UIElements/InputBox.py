@@ -64,6 +64,9 @@ class TextBox:
         if len(text) != 0:
             self.text += text
 
+    def replacewith(self, text):
+        self.text = text
+
     def backspace(self):
         self.text = self.text[:-1]
 

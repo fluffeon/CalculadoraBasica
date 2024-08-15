@@ -23,6 +23,8 @@ Height=600
 ConsoleX=Width/2-234/2
 ConsoleY=Height/2-292/2
 
+buffer=int()
+
 pygame.init()
 mainscreen = pygame.display.set_mode((Width,Height))
 
