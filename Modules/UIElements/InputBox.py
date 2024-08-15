@@ -1,4 +1,18 @@
 import pygame
+from platform import system
+
+if system() == "Windows":
+    normalfontsize = 22
+    normalfontstyle = 'Arial'
+    bigfontsize = 42
+    bigfontstyle = 'Arial'
+else:
+    smallfontsize = 22
+    smallfontstyle = 'Liberation Sans'
+    normalfontsize = 22
+    normalfontstyle = 'Liberation Sans'
+    bigfontsize = 42
+    bigfontstyle = 'dgjahkjgldakljg'
 
 class TextBox:
 
@@ -7,9 +21,10 @@ class TextBox:
         self.rect = pygame.Rect(x, y, w, h)
         self.color = (0, 0, 0)
         self.text = text
+        self.manuallyWritten = False
         self.fontstyle=pygame.font.SysFont(normalfontstyle,normalfontsize)
         self.txt_surface = self.fontstyle.render(text, True, self.color)
-        self.active = False
+        self.active = True
 
     def handle_event(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -22,7 +37,7 @@ class TextBox:
             # Change the current color of the input box.
             self.color = (0, 0, 0) if self.active else (150, 150, 150)
 
-        if event.type == pygame.KEYDOWN:
+        if event.type == pygame.KEYDOWN or self.manuallyWritten == True:
             if self.active:
                 if event.key == pygame.K_RETURN:
                     self.text = ''
@@ -31,8 +46,6 @@ class TextBox:
                 else:
                     if len(self.text) != 72:
                         self.text += event.unicode
-            # Re-render the text.
-            self.txt_surface = self.fontstyle.render(self.text, True, self.color)
 
     def update(self):
         # Resize the box if the text is too long.
@@ -44,3 +57,15 @@ class TextBox:
         pygame.draw.rect(screen, self.color, self.rect, 2)
         # Blit the text.
         screen.blit(self.txt_surface, (self.rect.x+5, self.rect.y+5))
+
+        self.txt_surface = self.fontstyle.render(self.text, True, self.color)
+
+    def writeinto(self, text):
+        if len(text) != 0:
+            self.text += text
+
+    def backspace(self):
+        self.text = self.text[:-1]
+
+    def clearbox(self):
+        self.text = ''

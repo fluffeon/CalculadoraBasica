@@ -21,29 +21,30 @@ Width=800
 Height=600
 
 ConsoleX=Width/2-234/2
-ConsoleY=Height/2-234/2
+ConsoleY=Height/2-292/2
 
 pygame.init()
 mainscreen = pygame.display.set_mode((Width,Height))
 
+calculatortextbox=TextBox(x=ConsoleX-2, y=ConsoleY, w=234, h=50)
+
 buttons=[
-    Button(x=ConsoleX, y=ConsoleY, screen=mainscreen, h=50, w=50, label="1"),
-    Button(x=ConsoleX+60, y=ConsoleY, screen=mainscreen, h=50, w=50, label="2"),
-    Button(x=ConsoleX+120, y=ConsoleY, screen=mainscreen, h=50, w=50, label="3"),
-    Button(x=ConsoleX, y=ConsoleY+60, screen=mainscreen, h=50, w=50, label="4"),
-    Button(x=ConsoleX+60, y=ConsoleY+60, screen=mainscreen, h=50, w=50, label="5"),
-    Button(x=ConsoleX+120, y=ConsoleY+60, screen=mainscreen, h=50, w=50, label="6"),
-    Button(x=ConsoleX, y=ConsoleY+120, screen=mainscreen, h=50, w=50, label="7"),
-    Button(x=ConsoleX+60, y=ConsoleY+120, screen=mainscreen, h=50, w=50, label="8"),
-    Button(x=ConsoleX+120, y=ConsoleY+120, screen=mainscreen, h=50, w=50, label="9"),
+    Button(x=ConsoleX, y=ConsoleY+60, screen=mainscreen, h=50, w=50, label="1", function=calculatortextbox.writeinto, functionArguments=('1')),
+    Button(x=ConsoleX+60, y=ConsoleY+60, screen=mainscreen, h=50, w=50, label="2", function=calculatortextbox.writeinto, functionArguments=('2')),
+    Button(x=ConsoleX+120, y=ConsoleY+60, screen=mainscreen, h=50, w=50, label="3", function=calculatortextbox.writeinto, functionArguments=('3')),
+    Button(x=ConsoleX, y=ConsoleY+120, screen=mainscreen, h=50, w=50, label="4", function=calculatortextbox.writeinto, functionArguments=('4')),
+    Button(x=ConsoleX+60, y=ConsoleY+120, screen=mainscreen, h=50, w=50, label="5", function=calculatortextbox.writeinto, functionArguments=('5')),
+    Button(x=ConsoleX+120, y=ConsoleY+120, screen=mainscreen, h=50, w=50, label="6", function=calculatortextbox.writeinto, functionArguments=('6')),
+    Button(x=ConsoleX, y=ConsoleY+180, screen=mainscreen, h=50, w=50, label="7", function=calculatortextbox.writeinto, functionArguments=('7')),
+    Button(x=ConsoleX+60, y=ConsoleY+180, screen=mainscreen, h=50, w=50, label="8", function=calculatortextbox.writeinto, functionArguments=('8')),
+    Button(x=ConsoleX+120, y=ConsoleY+180, screen=mainscreen, h=50, w=50, label="9", function=calculatortextbox.writeinto, functionArguments=('9')),
 
-    Button(x=ConsoleX+180, y=ConsoleY, screen=mainscreen, h=50, w=50, label="+"),
-    Button(x=ConsoleX+180, y=ConsoleY+60, screen=mainscreen, h=50, w=50, label="-"),
-    Button(x=ConsoleX+180, y=ConsoleY+120, screen=mainscreen, h=50, w=50, label="/"),
-    Button(x=ConsoleX+180, y=ConsoleY+180, screen=mainscreen, h=50, w=50, label="=")
+    Button(x=ConsoleX+180, y=ConsoleY+60, screen=mainscreen, h=50, w=50, label="+"),
+    Button(x=ConsoleX+180, y=ConsoleY+120, screen=mainscreen, h=50, w=50, label="-"),
+    Button(x=ConsoleX+180, y=ConsoleY+180, screen=mainscreen, h=50, w=50, label="/"),
+    Button(x=ConsoleX+180, y=ConsoleY+240, screen=mainscreen, h=50, w=50, label="="),
+    Button(x=ConsoleX+120, y=ConsoleY+240, screen=mainscreen, h=50, w=50, label="DEL", function=calculatortextbox.backspace)
 ]
-
-calculatortextbox=""
 
 clock = pygame.time.Clock()
 
@@ -58,5 +59,8 @@ while True:
         for eachbutton in buttons:
             eachbutton.checkPress(event)
 
+    calculatortextbox.draw(mainscreen)
+    calculatortextbox.update()
+    
     clock.tick(60)
     pygame.display.update() 
